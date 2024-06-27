@@ -33,6 +33,7 @@ jobs:
       DATABASE_USER: admin
       DATABASE_PASSWORD: admin
       DATABASE_NAME: secret_note
+      ENCRYPTION_KEY: secret_key
 
     steps:
       - name: Checkout code
