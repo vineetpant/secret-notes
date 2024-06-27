@@ -70,3 +70,7 @@ $ npm run test
 # test coverage
 $ npm run test:cov
 ```
+
+## Limitation: Encryption Key Storage
+
+The encryption key used to encrypt and decrypt notes is stored in an environment variable (ENCRYPTION_KEY). While this method is convenient and commonly used, it is not secure.

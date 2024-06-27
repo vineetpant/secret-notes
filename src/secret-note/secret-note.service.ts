@@ -8,13 +8,24 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SecretNote } from './secret-note.entity';
 import * as CryptoJS from 'crypto-js';
+import * as dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 @Injectable()
 export class SecretNoteService {
+  private readonly encryptionKey: string;
+
   constructor(
     @InjectRepository(SecretNote)
     private secretNoteRepository: Repository<SecretNote>,
-  ) {}
+  ) {
+    this.encryptionKey = process.env.ENCRYPTION_KEY;
+    if (!this.encryptionKey) {
+      throw new Error('ENCRYPTION_KEY environment variable is not set');
+    }
+  }
 
   /**
    * Encrypts the given text.
@@ -22,7 +33,7 @@ export class SecretNoteService {
    * @returns The encrypted text.
    */
   private encrypt(text: string): string {
-    return CryptoJS.AES.encrypt(text, 'secret_key').toString();
+    return CryptoJS.AES.encrypt(text, this.encryptionKey).toString();
   }
 
   /**
@@ -31,7 +42,7 @@ export class SecretNoteService {
    * @returns The decrypted text.
    */
   private decrypt(text: string): string {
-    const bytes = CryptoJS.AES.decrypt(text, 'secret_key');
+    const bytes = CryptoJS.AES.decrypt(text, this.encryptionKey);
     return bytes.toString(CryptoJS.enc.Utf8);
   }
 
