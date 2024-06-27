@@ -4,6 +4,10 @@
 
 Secret Notes API is a NestJS application that allows users to create, read, update, and delete secret notes. Each note is encrypted when stored and can be decrypted when retrieved.
 
+## Encryption 
+
+The encryption used is AES because we are encrypting notes which can be bigger in size so symmetric encryption is preferred.
+
 ## Code Documentation
 
 Each service method is documented using JSDoc comments, explaining the purpose, parameters, return values, and possible exceptions.
